@@ -1,0 +1,48 @@
+{
+  "extends": [
+    "eslint:recommended"
+//    "plugin:react/recommended"
+  ],
+  "plugins": [
+    "react"
+  ],
+  "env": {
+    "browser": true,
+    "commonjs": true,
+    "node": true,
+    "es6": true
+  },
+  "parser": "babel-eslint",
+  "rules": {
+    "indent": [
+      "error",
+      "tab",
+      {
+        "SwitchCase": 1
+      }
+    ],
+    "linebreak-style": [
+      "error",
+      "unix"
+    ],
+    "semi": [
+      "error",
+      "always"
+    ],
+    "no-console": "off",
+    "no-shadow": "error",
+    "arrow-body-style": ["error", "as-needed"],
+    "arrow-parens": "error",
+    "arrow-spacing": "error",
+    "no-self-compare": "error",
+    "no-duplicate-imports": "error",
+    "no-mixed-requires": "error",
+    "keyword-spacing": "error",
+
+    "react/jsx-uses-react": "error",
+    "react/jsx-uses-vars": "error"
+  },
+  "globals": {
+    "console": false
+  }
+}
