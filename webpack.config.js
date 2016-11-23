@@ -1,10 +1,17 @@
-var path = require("path");
-var webpack = require("webpack");
-var ExtractTextPlugin = require("extract-text-webpack-plugin");
+const path = require("path");
+const webpack = require("webpack");
+const ExtractTextPlugin = require("extract-text-webpack-plugin");
 
-var _ = require("lodash");
+const _ = require("lodash");
 
-const vendor = ['lodash'];
+const vendor = [
+  'lodash',
+  'react',
+  'react-dom',
+  "react-router",
+  "socket.io-client",
+  "rxjs"
+];
 
 function createConfig(isDebug) {
 
@@ -28,11 +35,22 @@ function createConfig(isDebug) {
     files: { test: /\.(png|jpg|jpeg|gif|woff|ttf|eot|svg|woff2)/, loader: 'url-loader?limit=5000' }
   };
 
-  const clientEntry = ['./src/client/client.js'];
-  const publicPath = '/build/';
+  const clientEntry = [
+    'babel-polyfill',
+    './src/client/client.js'
+  ];
+  let publicPath = '/build/';
 
   if (isDebug) {
+    plugins.push(new webpack.HotModuleReplacementPlugin());
 
+    clientEntry.unshift(
+      'react-hot-loader/patch',
+      'webpack-dev-server/client?http://localhost:8080/', 
+      'webpack/hot/only-dev-server'
+    );
+
+    publicPath = 'http://localhost:8080/build/';
   } else {
     plugins.push(
       new webpack.optimize.DedupePlugin(),

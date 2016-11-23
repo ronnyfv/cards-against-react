@@ -1,14 +1,29 @@
 {
-     "css": {
-          "indent_size": 4
-     },
-     "scss":{
-        "indent_size": 4
-     },
-     "html": {
-          "indent_size": 3
-     },
-     "eol": "\r\n",
-     "indent_with_tabs": true,
-     "indent_size": 4
+  "css": {
+    "space_around_combinator": true,
+    "space_around_selector_separator": true,
+    "newline_between_rules": true,
+    "selector_separator_newline": true
+  },
+  "scss": {
+    "space_around_combinator": true,
+    "space_around_selector_separator": true,
+    "newline_between_rules": true,
+    "selector_separator_newline": false,
+    "preserve_newlines": true,
+    "jslint_happy": true,
+    "space_after_anon_function": true,
+    "break_chained_methods": true,
+    "indent_handlebars": true,
+    "extra_liners": true
+  },
+  "html": {
+    "indent_size": 3
+  },
+  "eol": "\n",
+  "indent_with_tabs": false,
+  "indent_size": 2,
+  "preserve_newlines": true,
+  "max_preserve_newlines": 5,
+  "end_with_newline": true
 }

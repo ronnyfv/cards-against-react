@@ -2,12 +2,21 @@
 <html>
 
 <head>
-	<title>Cards</title>
-	<link rel="icon" href="/favicon.ico?v=2" />
+  <title>Cards</title>
+  <link rel="icon" href="/favicon.ico?v=2" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  {{#if useExternalStyles}}
+    <link rel='stylesheet' href='/build/application.css' /> 
+  {{/if}}
+
 </head>
 
 <body>
-	<h1>Hello World!!!!</h1>
+  <div id="app-root"></div>
+
+  <script src="{{scriptRoot}}/vendor.js"></script>
+  <script src="{{scriptRoot}}/app.js"></script>
 </body>
 
 </html>
