@@ -1,7 +1,7 @@
 {
   "extends": [
     "eslint:recommended"
-//    "plugin:react/recommended"
+    //    "plugin:react/recommended"
   ],
   "plugins": [
     "react"
@@ -17,7 +17,7 @@
   "rules": {
     "indent": [
       "error",
-      "tab",
+      2,
       {
         "SwitchCase": 1
       }
@@ -32,18 +32,25 @@
     ],
     "no-console": "off",
     "no-shadow": "error",
-    "arrow-body-style": ["error", "as-needed"],
+    "arrow-body-style": [
+      "error",
+      "as-needed"
+    ],
     "arrow-parens": "error",
     "arrow-spacing": "error",
     "no-self-compare": "error",
     "no-duplicate-imports": "error",
     "no-mixed-requires": "error",
     "keyword-spacing": "error",
-
+    "prefer-template": "error",
+    "prefer-const": "error",
     "react/jsx-uses-react": "error",
     "react/jsx-uses-vars": "error"
   },
   "globals": {
-    "console": false
+    "console": false,
+    "process": false,
+    "IS_PRODUCTION": false,
+    "IS_DEVELOPMENT": false
   }
 }

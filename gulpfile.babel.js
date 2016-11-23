@@ -1,106 +1,143 @@
 import gulp from "gulp";
 import path from "path";
 import rimraf from "rimraf";
+import webpack from "webpack";
 import child_process from "child_process";
+
+import webpackConfig from "./webpack.config.js";
 
 const $ = require("gulp-load-plugins")();
 
+// ***********************************************
+// SERVER
+
 const config = {
-	buildFolder: './build/'
+  buildFolder: './build/'
 };
 
 gulp.task('server:clean', (cb) => {
-	rimraf(config.buildFolder, () => cb());
+  rimraf(config.buildFolder, () => cb());
 });
 
 gulp.task(
-	'server:build',
-	gulp.series(
-		'server:clean',
-		compileServer
-	)
+  'server:build',
+  gulp.series(
+    'server:clean',
+    compileServer
+  )
 );
 
 gulp.task(
-	'server:watch',
-	gulp.series(
-		'server:build',
-		watchServer
-	)
+  'server:watch',
+  gulp.series(
+    'server:build',
+    watchServer
+  )
 );
 
 gulp.task(
-	'server:dev',
-	gulp.series(
-		'server:build',
-		gulp.parallel(
-			watchServer,
-			runServer
-		)
-	)
+  'server:dev',
+  gulp.series(
+    'server:build',
+    gulp.parallel(
+      watchServer,
+      runServer
+    )
+  )
 );
 
 gulp.task(
-	'server:test',
-	gulp.series(
-		'server:build',
-		testServer
-	)
+  'server:test',
+  gulp.series(
+    'server:build',
+    testServer
+  )
 );
 
 gulp.task(
-	'server:test:dev',
-	gulp.series(
-		'server:build',
-		gulp.parallel(
-			watchServer,
-			runServerTests
-		)
-	)
+  'server:test:dev',
+  gulp.series(
+    'server:build',
+    gulp.parallel(
+      watchServer,
+      runServerTests
+    )
+  )
 );
 
 function compileServer() {
-	return gulp.src('./src/server/**/*.js')
-		.pipe($.changed(config.buildFolder))
-		.pipe($.sourcemaps.init())
-		.pipe($.babel())
-		.pipe($.sourcemaps.write(
-			'.',
-			{ sourceRoot: path.join(__dirname, 'src', 'server') }
-		))
-		.pipe(gulp.dest(config.buildFolder));
+  return gulp.src('./src/server/**/*.js')
+    .pipe($.changed(config.buildFolder))
+    .pipe($.sourcemaps.init())
+    .pipe($.babel())
+    .pipe($.sourcemaps.write(
+      '.',
+      { sourceRoot: path.join(__dirname, 'src', 'server') }
+    ))
+    .pipe(gulp.dest(config.buildFolder));
 }
 
 function watchServer() {
-	return gulp
-		.watch('./src/server/**/*.js', gulp.series(compileServer))
-		.on('error', () => { });
+  return gulp
+    .watch('./src/server/**/*.js', gulp.series(compileServer))
+    .on('error', () => { });
 }
 
 function runServer() {
-	return $.nodemon({
-		script: './server.js',
-		watch: 'build',
-		ignore: ['**/__tests']
-	});
+  return $.nodemon({
+    script: './server.js',
+    watch: 'build',
+    ignore: ['**/__tests']
+  });
 }
 
 function testServer(cb) {
-	child_process.exec('node ./tests.js', (err, stdout, stderr) => {
-		console.log(stdout);
-		console.error(stderr);
+  child_process.exec('node ./tests.js', (err, stdout, stderr) => {
+    console.log(stdout);
+    console.error(stderr);
 
-		if (err) {
-			cb(new $.util.PluginError('testServer', 'Tests failed!'));
-		} else {
-			cb();
-		}
-	});
+    if (err) {
+      cb(new $.util.PluginError('testServer', 'Tests failed!'));
+    } else {
+      cb();
+    }
+  });
 }
 
 function runServerTests() {
-	return $.nodemon({
-		script: './tests.js',
-		watch: 'build'
-	});
+  return $.nodemon({
+    script: './tests.js',
+    watch: 'build'
+  });
+}
+
+// ***********************************************
+// CLIENT
+
+const consoleStats = {
+  colors: true,
+  exclude: ['node_modules'],
+  chunks: false,
+  assets: false,
+  timrings: false,
+  modules: false,
+  hash: false,
+  version: false
+};
+
+gulp.task(
+  'client:build',
+  buildClient
+);
+
+function buildClient(cb) {
+  webpack(webpackConfig, (err, stats) => {
+    if (err) {
+      cb(err);
+      return;
+    }
+
+    console.log(stats.toString(consoleStats));
+    cb();
+  });
 }
