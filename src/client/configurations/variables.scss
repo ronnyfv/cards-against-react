@@ -52,7 +52,7 @@ $header-font-size: 14px;
 
 @mixin raised {
   background: $color-raised;
-  box-shadow: 2px 2px 3px rbga(0, 0, 0, 0.1);
+  box-shadow: 2px 2px 3px rgba(0,0,0,0.1);
   border-radius: 3px;
   border: 1px solid #fff;
   border-right: none;

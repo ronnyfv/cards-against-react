@@ -11,12 +11,12 @@ class AppContainer extends Component {
     const {main, sidebar} = this.props;
 
     return (
-      <div className={`component-app`}>
-        <div className="inner">
-          <div className="sidebar">
+      <div className={`container-fluid comp-app`}>
+        <div className="row inner">
+          <div className="col-xs-12 col-sm-4 col-md-3 col-lg-2 sidebar">
             {sidebar}
           </div>
-          <div className="main">
+          <div className="col-xs main">
             {main}
           </div>
         </div>
