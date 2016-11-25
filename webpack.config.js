@@ -46,7 +46,7 @@ function createConfig(isDebug) {
 
     clientEntry.unshift(
       'react-hot-loader/patch',
-      'webpack-dev-server/client?http://localhost:8080/', 
+      'webpack-dev-server/client?http://localhost:8080/',
       'webpack/hot/only-dev-server'
     );
 
@@ -77,7 +77,7 @@ function createConfig(isDebug) {
     resolve: {
       extensions: ['', '.js', '.jsx'],
       alias: {
-        shared: path.join(__dirname, 'src', 'shared')
+        shared: path.join(__dirname, 'src', 'server', 'shared')
       }
     },
     module: {

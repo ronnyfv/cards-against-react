@@ -1,14 +1,21 @@
 import "./lobby.scss";
 
-import React, { Component } from "react";
+import React from "react";
 
+import * as A from "../actions";
+import { ContainerBase } from "../lib/component";
 import Chat from "./chat";
 
 //
 // ─── CONTAINER ──────────────────────────────────────────────────────────────────
 //
 
-class LobbyContainer extends Component {
+class LobbyContainer extends ContainerBase {
+  // static contextTypes = {
+  //   ...ContainerBase.contextTypes,
+  //   router: React.PropTypes.object.isRequired
+  // };
+
   constructor(props) {
     super(props);
 
@@ -60,12 +67,12 @@ class LobbyContainer extends Component {
 // ─── SIDEBAR ────────────────────────────────────────────────────────────────────
 //
 
-class LobbySidebar extends Component {
+class LobbySidebar extends ContainerBase {
   constructor(props) {
     super(props);
 
     this._login = () => {
-      //TODO: implement
+      this.dispatch(A.dialogSet(A.DIALOG_LOGIN, true));
     };
 
     this._createGame = () => {

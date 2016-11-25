@@ -5,7 +5,8 @@ import AppContainer from "./components/app";
 import Lobby from "./components/lobby";
 import Game from "./components/game";
 
-function requireAuth(nextState, replace) {
+function requireAuth() {
+  //nextState, replace
   console.log('realizando autenticação!');
 }
 
