@@ -1,7 +1,7 @@
 {
   "extends": [
     "eslint:recommended"
-    //    "plugin:react/recommended"
+    // "plugin:react/recommended"
   ],
   "plugins": [
     "react"
@@ -30,6 +30,8 @@
       "error",
       "always"
     ],
+    
+    "no-unused-vars": "warn",
     "no-console": "off",
     "no-shadow": "error",
     "arrow-parens": "error",
@@ -41,7 +43,7 @@
     "prefer-template": "error",
     "prefer-const": "error",
 
-    "no-unused-vars": "warn",
+    "consistent-this": "error",
 
     "react/jsx-uses-react": "error",
     "react/jsx-uses-vars": "error"

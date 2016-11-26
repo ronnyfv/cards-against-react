@@ -79,7 +79,7 @@ export class Dispatcher {
     }
 
     this._emitBuffer = [];
-    this._emit = true;
+    this._inEmit = true;
 
     if (this._handlers.hasOwnProperty('*'))
       this._handlers['*'].forEach((h) => invokeHandler(action, h));
@@ -89,7 +89,7 @@ export class Dispatcher {
 
     const buffer = this._emitBuffer;
     this._emitBuffer = [];
-    this.inEmit = false;
+    this._inEmit = false;
 
     for (const subAction of buffer) {
       this.emit(subAction);
@@ -100,8 +100,8 @@ export class Dispatcher {
     this.emit(A.request(action));
   }
 
-  fail(error) {
-    this.emit(A.fail(error));
+  fail(action, error) {
+    this.emit(A.fail(action, error));
   }
 
   succeed(action) {

@@ -18,6 +18,11 @@ body {
   color: $color-text;
   font-size: 13px;
   line-height: 1.5;
+  text-rendering: optimizeLegibility;
+  letter-spacing: .1px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-shadow: rgba(0,0,0,.01) 0 0 1px;
 }
 
 #app-root {
@@ -66,4 +71,36 @@ body {
       background: lighten($color-good, 10%);
     }
   }
+}
+
+.m-b-5 {
+  margin-bottom: 5px;
+}
+.m-b-10 {
+  margin-bottom: 10px;
+}
+.m-b-15 {
+  margin-bottom: 15px;
+}
+.m-b-20 {
+  margin-bottom: 20px;
+}
+.m-b-25 {
+  margin-bottom: 25px;
+}
+.m-b-30 {
+  margin-bottom: 30px;
+}
+
+.m-t-5 {
+  margin-top: 5px;
+}
+.m-t-10 {
+  margin-top: 10px;
+}
+.m-t-15 {
+  margin-top: 15px;
+}
+.m-t-20 {
+  margin-top: 20px;
 }

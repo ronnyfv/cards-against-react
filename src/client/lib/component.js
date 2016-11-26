@@ -17,7 +17,6 @@ export class StoreProvider extends Component {
 
   getChildContext() {
     const {stores, services} = this.props;
-
     return { stores, services };
   }
 }
