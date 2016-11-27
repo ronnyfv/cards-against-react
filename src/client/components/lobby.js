@@ -20,36 +20,26 @@ class LobbyContainer extends ContainerBase {
     super(props);
 
     this._joinGame = (game) => {
-      console.log(`Todo: join game ${game.title}`);
+      this.request(A.gameJoin(game.id));
     };
 
     this._sendMessage = (message) => {
-      console.log(`Sending ${message}`);
+      this.request(A.lobbySendMessage(message));
     };
   }
 
+  componentWillMount() {
+    const {stores: {lobby, app}} = this.context;
+
+    this.subscribe(lobby.opSendMessage$, (opSendMessage) => this.setState({ opSendMessage }));
+    this.subscribe(lobby.view$, (lobbyView) => this.setState({ lobby: lobbyView }));
+    this.subscribe(app.reconnected$, () => this.request(A.lobbyJoin()));
+
+    this.request(A.lobbyJoin());
+  }
+
   render() {
-    const games = [
-      { title: 'Game 1', _id: 1, players: ['one', 'two', 'three'] },
-      { title: 'Game 2', _id: 2, players: ['one', 'two', 'three'] },
-      { title: 'Game 3', _id: 3, players: ['one', 'two', 'three'] },
-      { title: 'Game 4', _id: 4, players: ['one', 'two', 'three'] },
-      { title: 'Game 5', _id: 5, players: ['one', 'two', 'three'] }
-    ];
-
-    const opSendMessage = {
-      can: true,
-      inProgreee: false
-    };
-
-    const messages = [
-      { index: 1, name: 'Person 1', message: 'Teste 1' },
-      { index: 2, name: 'Person 2', message: 'Teste 2' },
-      { index: 3, name: 'Person 3', message: 'Teste 3' },
-      { index: 4, name: 'Person 4', message: 'Teste 4' },
-      { index: 5, name: 'Person 5', message: 'Teste 5' },
-      { index: 6, name: 'Person 6', message: 'Teste 6' }
-    ];
+    const {lobby: {games, messages}, opSendMessage} = this.state;
 
     return (
       <div className="comp-lobby">
@@ -76,20 +66,25 @@ class LobbySidebar extends ContainerBase {
     };
 
     this._createGame = () => {
-      //TODO: implement
+      this.request(A.gameCreate());
     };
   }
 
+  componentWillMount() {
+    const {stores: {user, game}} = this.context;
+
+    this.subscribe(user.opLogin$, (opLogin) => this.setState({ opLogin }));
+    this.subscribe(game.opCreateGame$, (opCreateGame) => this.setState({ opCreateGame }));
+  }
+
   render() {
-    const canLogin = true;
-    const canCreateGame = true;
-    const createGameInProgress = false;
+    const {opLogin, opCreateGame} = this.state;
 
     return (
       <section className="comp-lobby-sidebar">
         <div className="m-sidebar-buttons">
-          {!canLogin ? null : <button className="m-button primary" onClick={this._login}>Login</button>}
-          {!canCreateGame ? null : <button className="m-button good" onClick={this._createGame} disabled={createGameInProgress}>Create Game</button>}
+          {!opLogin.can ? null : <button className="m-button primary" onClick={this._login}>Login</button>}
+          {!opCreateGame.can ? null : <button className="m-button good" onClick={this._createGame} disabled={opCreateGame.inProgress}>Create Game</button>}
         </div>
       </section>
     );
@@ -109,7 +104,7 @@ function GameList({games, joinGame}) {
       {games.length > 0 ? null : <div className="no-games">There are no games yet.</div>}
 
       {games.map((game) =>
-        <div className="game" key={game._id} onClick={() => joinGame(game)}>
+        <div className="game" key={game.id} onClick={() => joinGame(game)}>
           <div className="title">
             {game.title}
           </div>

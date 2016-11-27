@@ -43,7 +43,7 @@ export default class Chat extends Component {
     if (this._lastIndex == newIndex)
       return;
 
-    this._messages.scrollTop = this.messages.scrollHeight;
+    this._messages.scrollTop = this._messages.scrollHeight;
     this._lastIndex = newIndex;
   }
 
