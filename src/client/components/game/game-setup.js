@@ -77,7 +77,7 @@ export default class GameSetup extends ContainerBase {
     const error = opStart.error || opSetOptions.error;
 
     return (
-      <section className={`comp-game-settings ${disabled ? 'disabled' : 'enadled'}`}>
+      <section className={`comp-game-setup ${disabled ? 'disabled' : 'enabled'}`}>
         <h1>
           Game Options
           {!error ? null : <span className="error">{error}</span>}

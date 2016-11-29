@@ -9,38 +9,57 @@ import { validateMessage } from "shared/validation/chat";
 const defaultView = {
   id: 42,
   title: 'Tester game',
-  step: A.STEP_SETUP,
+  step: A.STEP_JUDGE_STACKS,
   options: {
     scoreLimit: 5,
     sets: ['1ed']
   },
   players: [
-    { id: 1, name: 'Nelson', score: 40, isCzar: false, isPlaying: false, isWinner: true },
-    { id: 2, name: 'Blegh', score: 11, isCzar: false, isPlaying: true, isWinner: false },
-    { id: 3, name: 'Whoa', score: 14, isCzar: true, isPlaying: false, isWinner: false },
+    { id: 1, name: 'Nelson', score: 40, isCzar: false, isPlaying: true, isWinner: false },
+    { id: 2, name: 'Blegh', score: 11, isCzar: false, isPlaying: false, isWinner: false },
+    { id: 3, name: 'Whoa', score: 14, isCzar: false, isPlaying: false, isWinner: false },
     { id: 4, name: 'Stuff', score: 23, isCzar: false, isPlaying: false, isWinner: false },
     { id: 5, name: 'Maria', score: 33, isCzar: false, isPlaying: false, isWinner: false },
     { id: 6, name: 'Lucas', score: 1, isCzar: false, isPlaying: false, isWinner: false }
   ],
   messages: [
-    { id: 1, name: 'Whoa', message: 'Testando' },
-    { id: 2, name: 'Whoa', message: 'Testando' },
-    { id: 3, name: 'Whoa', message: 'Testando' },
-    { id: 4, name: 'Whoa', message: 'Testando' },
-    { id: 5, name: 'Whoa', message: 'Testando' }
+    { index: 1, name: 'Whoa', message: 'Testando' },
+    { index: 2, name: 'Whoa', message: 'Testando' },
+    { index: 3, name: 'Whoa', message: 'Testando' },
+    { index: 4, name: 'Whoa', message: 'Testando' },
+    { index: 5, name: 'Whoa', message: 'Testando' }
   ],
-  round: null,
+  round: {
+    blackCard: { id: 1, text: 'Does something with a car? Maybe?', set: '1ed', whiteCardCount: 1 },
+    stacks: [
+      { id: 1, cards: [{ id: 1, text: 'Hello!!!!', set: '1ed' }] },
+      { id: 2, cards: [{ id: 1, text: 'Bluhhhh!!!!', set: '1ed' }] },
+      { id: 3, cards: [{ id: 1, text: 'Byeee!!!!', set: '1ed' }] }
+    ]
+  },
   timer: null
 };
 
 const defaultPlayerView = {
   id: 1,
-  hand: [],
-  stack: null
+  hand: [
+    { id: 2, text: 'Card 2', set: '1ed' },
+    { id: 3, text: 'Card 3', set: '1ed' },
+    { id: 4, text: 'Card 4', set: '1ed' },
+    { id: 5, text: 'Card 5', set: '1ed' },
+    { id: 7, text: 'Card 7', set: '1ed' },
+    { id: 8, text: 'Card 8', set: '1ed' },
+    { id: 9, text: 'Card 9', set: '1ed' },
+    { id: 10, text: 'Card 10', set: '1ed' }
+  ],
+  stack: {
+    id: 2,
+    cards: [{ id: 6, text: 'Card 6', set: '1ed' }]
+  }
 };
 
 export default class GameStore {
-  constructor({dispatcher}, user) {
+  constructor({ dispatcher }, user) {
 
     dispatcher.onRequest({
       [A.GAME_CREATE]: (action) => {
