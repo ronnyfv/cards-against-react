@@ -4,6 +4,7 @@
   "description": "",
   "main": "server.js",
   "scripts": {
+    "postinstall": "gulp build",
     "dev": "gulp dev",
     "start": "node ./server.js",
     "test": "node ./tests.js"
