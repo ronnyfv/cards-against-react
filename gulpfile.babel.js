@@ -3,8 +3,6 @@ import path from "path";
 import rimraf from "rimraf";
 import webpack from "webpack";
 import child_process from "child_process";
-import WebpackDevServer from "webpack-dev-server";
-
 import webpackConfig from "./webpack.config.js";
 
 const $ = require("gulp-load-plugins")();
@@ -164,6 +162,7 @@ function buildClient(cb) {
 }
 
 function watchClient() {
+  const WebpackDevServer = require("webpack-dev-server");
   const compiler = webpack(webpackConfig);
   const server = new WebpackDevServer(compiler, {
     publicPath: '/build/',
