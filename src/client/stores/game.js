@@ -1,4 +1,4 @@
-import { Observable, BehaviorSubject } from "rxjs";
+import { Observable } from "rxjs";
 import _ from "lodash";
 
 import { mapOp$ } from "shared/observable";
@@ -51,7 +51,6 @@ export default class GameStore {
     });
 
     this.view$ = createView$(dispatcher, A.VIEW_GAME, defaultView);
-
     this.player$ = createView$(dispatcher, A.VIEW_PLAYER, defaultPlayerView);
 
     const isLoggedIn$ = user.details$.map((d) => d.isLoggedIn);

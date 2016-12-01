@@ -1,10 +1,10 @@
 import * as A from "../actions";
-import { Dispatcher } from "../shared/dispatcher";
+import { DispatcherServer } from "../dispatcher";
 import LobbyHandlers from "./handlers/lobby";
 import GameHandlers from "./handlers/game";
 import { validateName } from "../shared/validation/user";
 
-export class Client extends Dispatcher {
+export class Client extends DispatcherServer {
   get details() {
     return {
       id: this.id,
@@ -13,19 +13,19 @@ export class Client extends Dispatcher {
     };
   }
 
-  constructor(socket, application) {
+  constructor(socket, app) {
     super();
 
     this.id = socket.id;
     this.isLoggedIn = false;
     this.name = null;
-    this.application = application;
+    this.application = app;
     this.handlers = null;
 
     this._socket = socket;
     this._onDisposes = [];
 
-    this._onDisposes.push(this.application.addClient(this));
+    this._onDisposes.push(app.addClient(this));
 
     this.emit(A.userDetailsSet(this.details));
 

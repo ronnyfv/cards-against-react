@@ -215,9 +215,9 @@ export function mergeDiff(base, diff, location = '') {
         delete copy[key];
       else
         copy[key] = result;
-
-      return copy;
     }
+
+    return copy;
   }
 
   return diff;

@@ -58,6 +58,7 @@
     "webpack": "^1.13.3"
   },
   "devDependencies": {
+    "colors": "^1.1.2",
     "react-hot-loader": "^3.0.0-beta.6",
     "sass-lint": "^1.10.2",
     "webpack-dev-server": "^1.16.2"

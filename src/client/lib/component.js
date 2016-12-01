@@ -4,7 +4,7 @@ export class StoreProvider extends Component {
   static propTypes = {
     stores: PropTypes.object.isRequired,
     services: PropTypes.object.isRequired
-  }
+  };
 
   static childContextTypes = {
     stores: PropTypes.object.isRequired,

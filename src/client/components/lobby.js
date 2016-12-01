@@ -11,10 +11,6 @@ import Chat from "./chat";
 //
 
 class LobbyContainer extends ContainerBase {
-  // static contextTypes = {
-  //   ...ContainerBase.contextTypes,
-  //   router: React.PropTypes.object.isRequired
-  // };
 
   constructor(props) {
     super(props);

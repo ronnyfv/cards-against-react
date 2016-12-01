@@ -82,10 +82,10 @@ export class Dispatcher {
     this._inEmit = true;
 
     if (this._handlers.hasOwnProperty('*'))
-      this._handlers['*'].forEach((h) => invokeHandler(action, h));
+      this._handlers['*'].forEach((h) => this.invokeHandler(action, h));
 
     if (this._handlers.hasOwnProperty(action.type))
-      this._handlers[action.type].forEach((h) => invokeHandler(action, h));
+      this._handlers[action.type].forEach((h) => this.invokeHandler(action, h));
 
     const buffer = this._emitBuffer;
     this._emitBuffer = [];
@@ -114,11 +114,11 @@ export class Dispatcher {
     else
       this.succeed(action);
   }
-}
 
-function invokeHandler(action, {statusFilter, callback}) {
-  if (statusFilter && statusFilter != action.status)
-    return;
+  invokeHandler(action, { statusFilter, callback }) {
+    if (statusFilter && statusFilter != action.status)
+      return;
 
-  callback(action);
+    callback(action);
+  }
 }

@@ -69,7 +69,7 @@ export class Deck {
   }
 
   drawWhiteCards(count) {
-    if (count >= this.whiteDeck.length) {
+    if (count >= this._whiteDeck.length) {
       if (count >= this._whiteDeck.length + this._whiteDiscard.length)
         throw new Error(`Cannot draw ${count} cards, since the aren't enough left!`);
 
@@ -77,6 +77,7 @@ export class Deck {
       this._whiteDiscard = [];
       shuffle(this._whiteDeck);
     }
+
 
     return this._whiteDeck.splice(0, count);
   }
