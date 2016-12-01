@@ -1,6 +1,5 @@
 import "./game.scss";
 
-import _ from "lodash";
 import React from "react";
 
 import * as A from "../actions";
@@ -21,9 +20,10 @@ class GameContainer extends ContainerBase {
       this.request(A.gameSendMessage(this.state.game.id, message));
     };
   }
+
   componentWillMount() {
-    const {stores: {app, game}} = this.context;
-    const {params} = this.props;
+    const { stores: { app, game } } = this.context;
+    const { params } = this.props;
     const gameId = parseInt(params.gameId);
 
     this.subscribe(game.opJoinGame$, (opJoinGame) => this.setState({ opJoinGame }));
@@ -38,7 +38,7 @@ class GameContainer extends ContainerBase {
   }
 
   render() {
-    const {opJoinGame, opSendMessage, game} = this.state;
+    const { opJoinGame, opSendMessage, game } = this.state;
     let body = null;
     let showChat = true;
 
@@ -61,7 +61,7 @@ class GameContainer extends ContainerBase {
       <div className="comp-game">
         {body}
         {!showChat ? null :
-          <Chat messages={game.messages} opSendMessage={opSendMessage} sendMessage={this._sendMessage} />
+          <Chat messages={game.messages} opSendMessage={opSendMessage} sendMessage={this._sendMessage}/>
         }
       </div>
     );
@@ -89,7 +89,7 @@ class GameSidebar extends ContainerBase {
   }
 
   componentWillMount() {
-    const {stores: {user, game}} = this.context;
+    const { stores: { user, game } } = this.context;
 
     this.subscribe(user.opLogin$, (opLogin) => this.setState({ opLogin }));
 
@@ -97,17 +97,18 @@ class GameSidebar extends ContainerBase {
   }
 
   render() {
-    const {opLogin, game} = this.state;
+    const { opLogin, game } = this.state;
 
     return (
       <section className="comp-game-sidebar">
         <div className="m-sidebar-buttons">
-          {!opLogin.can ? null : <button className="m-button primary" onClick={this._login}>login to join the game</button>}
+          {!opLogin.can ? null :
+            <button className="m-button primary" onClick={this._login}>login to join the game</button>}
 
           <button className="m-button" onClick={this._exitGame}>leave game</button>
         </div>
         {game.step == A.STEP_DISPOSED ? null :
-          <PlayerList players={game.players} />
+          <PlayerList players={game.players}/>
         }
       </section>
     );
@@ -121,7 +122,7 @@ class GameSidebar extends ContainerBase {
 // ─── STATELESS ──────────────────────────────────────────────────────────────────
 //
 
-function PlayerList({players}) {
+function PlayerList({ players }) {
   return (
     <ul className="comp-player-list">
       {players.map((player) => {
@@ -153,7 +154,7 @@ function PlayerList({players}) {
 // ─── HELPERS ────────────────────────────────────────────────────────────────────
 //
 
-function getPlayerStatus({isCzar, isWinner, isPlaying}) {
+function getPlayerStatus({ isCzar, isWinner, isPlaying }) {
   if (isCzar)
     return ['is-czar', 'czar'];
 

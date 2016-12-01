@@ -11,12 +11,20 @@ const defaultDetails = {
 };
 
 export default class UserStore {
-  constructor({dispatcher}) {
-    this.details$ = new BehaviorSubject(defaultDetails);
+  constructor({dispatcher, socket}) {
+
+    this.details$ = dispatcher
+      .on$(A.USER_DETAILS_SET)
+      .map((a) => a.details)
+      .startWith(defaultDetails)
+      .publishReplay(1);
+    this.details$.connect();
+
 
     this.details$.subscribe((details) => {
       Object.keys(details).forEach((k) => this[k] = details[k]);
     });
+
 
     dispatcher.onRequest({
       [A.USER_LOGIN]: (action) => {
@@ -27,15 +35,10 @@ export default class UserStore {
           return;
         }
 
-        dispatcher.succeed(action);
-
-        this.details$.next({
-          isLoggedIn: true,
-          id: 4432,
-          name: action.name
-        });
+        socket.emit('action', action);
       }
     });
+
 
     this.opLogin$ = mapOp$(
       dispatcher.on$(A.USER_LOGIN),

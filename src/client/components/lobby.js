@@ -32,7 +32,9 @@ class LobbyContainer extends ContainerBase {
     const {stores: {lobby, app}} = this.context;
 
     this.subscribe(lobby.opSendMessage$, (opSendMessage) => this.setState({ opSendMessage }));
+
     this.subscribe(lobby.view$, (lobbyView) => this.setState({ lobby: lobbyView }));
+
     this.subscribe(app.reconnected$, () => this.request(A.lobbyJoin()));
 
     this.request(A.lobbyJoin());

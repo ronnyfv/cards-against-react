@@ -5,82 +5,37 @@ import { mapOp$ } from "shared/observable";
 import * as A from "../actions";
 import { Validator } from "shared/validation";
 import { validateMessage } from "shared/validation/chat";
+import { createView$ } from "../lib/stores";
 
 const defaultView = {
-  id: 42,
-  title: 'Tester game',
-  step: A.STEP_JUDGE_STACKS,
-  options: {
-    scoreLimit: 5,
-    sets: ['1ed']
-  },
-  players: [
-    { id: 1, name: 'Nelson', score: 40, isCzar: false, isPlaying: true, isWinner: false },
-    { id: 2, name: 'Blegh', score: 11, isCzar: false, isPlaying: false, isWinner: false },
-    { id: 3, name: 'Whoa', score: 14, isCzar: false, isPlaying: false, isWinner: false },
-    { id: 4, name: 'Stuff', score: 23, isCzar: false, isPlaying: false, isWinner: false },
-    { id: 5, name: 'Maria', score: 33, isCzar: false, isPlaying: false, isWinner: false },
-    { id: 6, name: 'Lucas', score: 1, isCzar: false, isPlaying: false, isWinner: false }
-  ],
-  messages: [
-    { index: 1, name: 'Whoa', message: 'Testando' },
-    { index: 2, name: 'Whoa', message: 'Testando' },
-    { index: 3, name: 'Whoa', message: 'Testando' },
-    { index: 4, name: 'Whoa', message: 'Testando' },
-    { index: 5, name: 'Whoa', message: 'Testando' }
-  ],
-  round: {
-    blackCard: { id: 1, text: 'Does something with a car? Maybe?', set: '1ed', whiteCardCount: 1 },
-    stacks: [
-      { id: 1, cards: [{ id: 1, text: 'Hello!!!!', set: '1ed' }] },
-      { id: 2, cards: [{ id: 1, text: 'Bluhhhh!!!!', set: '1ed' }] },
-      { id: 3, cards: [{ id: 1, text: 'Byeee!!!!', set: '1ed' }] }
-    ]
-  },
+  id: null,
+  title: null,
+  step: A.STEP_DISPOSED,
+  options: {},
+  players: [],
+  messages: [],
+  round: null,
   timer: null
 };
 
 const defaultPlayerView = {
-  id: 1,
-  hand: [
-    { id: 2, text: 'Card 2', set: '1ed' },
-    { id: 3, text: 'Card 3', set: '1ed' },
-    { id: 4, text: 'Card 4', set: '1ed' },
-    { id: 5, text: 'Card 5', set: '1ed' },
-    { id: 7, text: 'Card 7', set: '1ed' },
-    { id: 8, text: 'Card 8', set: '1ed' },
-    { id: 9, text: 'Card 9', set: '1ed' },
-    { id: 10, text: 'Card 10', set: '1ed' }
-  ],
-  stack: {
-    id: 2,
-    cards: [{ id: 6, text: 'Card 6', set: '1ed' }]
-  }
+  id: null,
+  hand: [],
+  stack: null
 };
 
 export default class GameStore {
-  constructor({ dispatcher }, user) {
+  constructor({ dispatcher, socket }, user) {
+
+    const passThoughAction = (action) => socket.emit('action', action);
 
     dispatcher.onRequest({
-      [A.GAME_CREATE]: (action) => {
-        dispatcher.succeed(action);
-        dispatcher.succeed(A.gameJoin(42));
-      },
-      [A.GAME_JOIN]: (action) => {
-        dispatcher.succeed(action);
-      },
-      [A.GAME_SET_OPTIONS]: (action) => {
-        dispatcher.succeed(action);
-      },
-      [A.GAME_START]: (action) => {
-        dispatcher.succeed(action);
-      },
-      [A.GAME_SELECT_CARD]: (action) => {
-        dispatcher.succeed(action);
-      },
-      [A.GAME_SELECT_STACK]: (action) => {
-        dispatcher.succeed(action);
-      },
+      [A.GAME_CREATE]: passThoughAction,
+      [A.GAME_JOIN]: passThoughAction,
+      [A.GAME_SET_OPTIONS]: passThoughAction,
+      [A.GAME_START]: passThoughAction,
+      [A.GAME_SELECT_CARD]: passThoughAction,
+      [A.GAME_SELECT_STACK]: passThoughAction,
       [A.GAME_SEND_MESSAGE]: (action) => {
         const validator = new Validator();
 
@@ -91,13 +46,13 @@ export default class GameStore {
           return;
         }
 
-        dispatcher.succeed(action);
+        passThoughAction(action);
       }
     });
 
-    this.view$ = new BehaviorSubject(defaultView);
+    this.view$ = createView$(dispatcher, A.VIEW_GAME, defaultView);
 
-    this.player$ = new BehaviorSubject(defaultPlayerView);
+    this.player$ = createView$(dispatcher, A.VIEW_PLAYER, defaultPlayerView);
 
     const isLoggedIn$ = user.details$.map((d) => d.isLoggedIn);
 

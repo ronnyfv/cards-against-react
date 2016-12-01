@@ -2,18 +2,15 @@ import _ from "lodash";
 import { Observable, BehaviorSubject } from "rxjs";
 
 import * as A from "../actions";
+import { createView$ } from "../lib/stores";
 
 const defaultView = {
-  sets: [
-    { id: '1ed', name: '1st edition' },
-    { id: '2ed', name: '2st edition' },
-    { id: '3ed', name: '3st edition' }
-  ]
+  sets: []
 };
 
 export default class AppStore {
-  constructor({dispatcher}) {
-    this.view$ = new BehaviorSubject(defaultView);
+  constructor({ dispatcher, socket }) {
+    this.view$ = createView$(dispatcher, A.VIEW_APP, defaultView);
 
     this.dialogs$ = dispatcher
       .on$(A.DIALOG_SET)
@@ -30,7 +27,18 @@ export default class AppStore {
 
     this.dialogs$.connect();
 
-    this.connection$ = new BehaviorSubject(A.CONNECTION_CONNECTED);
-    this.reconnected$ = Observable.empty();
+    socket.on('connect', () => dispatcher.emit(A.appConnectionSet(A.CONNECTION_CONNECTED)));
+    socket.on('reconnection', () => dispatcher.emit(A.appConnectionSet(A.CONNECTION_RECONNECTING)));
+    socket.on('disconnect', () => dispatcher.emit(A.appConnectionSet(A.CONNECTION_DISCONNECTED)));
+    socket.on('reconnect', () => dispatcher.emit(A.appConnectionReconnected(A.CONNECTION_CONNECTING)));
+
+    this.connection$ = dispatcher
+      .on$(A.APP_CONNECTION_SET)
+      .startWith(socket.connected ? A.CONNECTION_CONNECTED : A.CONNECTION_DISCONNECTED)
+      .publishReplay(1);
+    this.connection$.connect();
+
+    this.reconnected$ = dispatcher.on$(A.APP_CONNECTION_RECONNECTED).publish();
+    this.reconnected$.connect();
   }
 }

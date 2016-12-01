@@ -7,16 +7,32 @@ export const STATUS_SUCCESS = 'STATUS_SUCCESS';
 //
 
 export function request(action) {
-  return {...action, status: STATUS_REQUEST };
+  return { ...action, status: STATUS_REQUEST };
 }
 
 export function fail(action, error) {
-  return {...action, status: STATUS_FAIL, error };
+  return { ...action, status: STATUS_FAIL, error };
 }
 
 export function succeed(action) {
-  return {...action, status: STATUS_SUCCESS };
+  return { ...action, status: STATUS_SUCCESS };
 }
+
+// ────────────────────────────────────────────────────────────────────────────────
+
+
+//
+// ─── VIEWS ───────────────────────────────────────────────────────────────
+//
+
+export const MERGE_VIEW = 'MERGE_VIEW';
+export const mergeView = (view, diff, id = undefined) => ({ type: MERGE_VIEW, view, diff, id });
+export const setView = (view, data, id = undefined) => mergeView(view, { $set: data }, id);
+
+export const VIEW_APP = 'VIEW_APP';
+export const VIEW_LOBBY = 'VIEW_LOBBY';
+export const VIEW_GAME = 'VIEW_GAME';
+export const VIEW_PLAYER = 'VIEW_PLAYER';
 
 // ────────────────────────────────────────────────────────────────────────────────
 
@@ -38,7 +54,7 @@ export const userDetailsSet = (details) => ({ type: USER_DETAILS_SET, details })
 // ─── LOBBY ACTIONS ──────────────────────────────────────────────────────────────
 //
 
-export const LOBBY_SEND_MESSAGE = 'LOBBY_sEND_MESSAGE';
+export const LOBBY_SEND_MESSAGE = 'LOBBY_SEND_MESSAGE';
 export const lobbySendMessage = (message) => ({ type: LOBBY_SEND_MESSAGE, message });
 
 export const LOBBY_JOIN = 'LOBBY_JOIN';

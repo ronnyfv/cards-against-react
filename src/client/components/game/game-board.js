@@ -1,6 +1,5 @@
 import "./game-board.scss";
 
-import _ from "lodash";
 import React from "react";
 
 import * as A from "../../actions";
@@ -45,7 +44,7 @@ export default class GameBoard extends ContainerBase {
 
     this.subscribe(game.player$, (player) => this.setState({ player }));
 
-    this.subscribe(game.opSelectCard$, (opSelectCard) => this.setState({ opSelectCard }));
+    this.subscribe(game.opSelectCard$, (opSelectCard) => this.setState({ opSelectCard, isHandOpen: opSelectCard.can }));
 
     this.subscribe(game.opSelectStack$, (opSelectStack) => this.setState({ opSelectStack }));
   }
@@ -89,7 +88,7 @@ export default class GameBoard extends ContainerBase {
           </div>
         </div>
         <Stacks stacks={stacks} outStackId={outStackId} opSelectStack={opSelectStack} selectStack={this._selectStack}/>
-        <PlayerHand opSelectCard={opSelectCard} selectCard={this._selectCard} hard={player.hand}
+        <PlayerHand opSelectCard={opSelectCard} selectCard={this._selectCard} hand={player.hand}
                     toggle={this._toggleHand} isOpen={isHandOpen}/>
       </section>
     );

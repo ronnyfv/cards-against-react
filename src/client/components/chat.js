@@ -56,7 +56,7 @@ export default class Chat extends Component {
           {messages.map((message) =>
             <li key={message.index}>
               <span className="author">{message.name}</span>
-              <span className="message">{message.message}</span>
+              <span className="message">{message.message} - {message.date}</span>
             </li>
           )}
         </ul>

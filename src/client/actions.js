@@ -25,6 +25,6 @@ export const APP_CONNECTION_SET = 'APP_CONNECTION_SET';
 export const appConnectionSet = (connection) => ({ type: APP_CONNECTION_SET, connection });
 
 export const APP_CONNECTION_RECONNECTED = 'APP_CONNECTION_RECONNECTED';
-export const appConnectionReconnectedSet = () => ({ type: APP_CONNECTION_RECONNECTED });
+export const appConnectionReconnected = () => ({ type: APP_CONNECTION_RECONNECTED });
 
 // ────────────────────────────────────────────────────────────────────────────────
