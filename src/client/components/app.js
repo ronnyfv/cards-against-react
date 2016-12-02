@@ -61,7 +61,7 @@ class AppContainer extends ContainerBase {
             {sidebar}
           </aside>
           <article className="ads">
-            Advertisements
+            How to play
           </article>
         </div>
         <footer className="footer m-t-10">
