@@ -6,7 +6,8 @@ import * as A from "../actions";
 
 const defaultView = {
   messages: [],
-  games: []
+  games: [],
+  users: []
 };
 
 export default class LobbyStore {
@@ -14,9 +15,11 @@ export default class LobbyStore {
     this.view$ = createView$(dispatcher, A.VIEW_LOBBY, defaultView);
 
     dispatcher.onRequest({
+
       [A.LOBBY_JOIN]: (action) => {
         socket.emit('action', action);
       },
+
       [A.LOBBY_SEND_MESSAGE]: (action) => {
         const validator = new Validator();
 

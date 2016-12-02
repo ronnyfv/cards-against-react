@@ -80,7 +80,8 @@ function compileServer() {
 function watchServer() {
   return gulp
     .watch('./src/server/**/*.js', gulp.series(compileServer))
-    .on('error', () => { });
+    .on('error', () => {
+    });
 }
 
 function runServer() {
@@ -170,7 +171,8 @@ function watchClient() {
     stats: consoleStats
   });
 
-  server.listen(8080, () => { });
+  server.listen(8080, () => {
+  });
 }
 
 

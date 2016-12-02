@@ -25,7 +25,7 @@ class LobbyContainer extends ContainerBase {
   }
 
   componentWillMount() {
-    const {stores: {lobby, app}} = this.context;
+    const { stores: { lobby, app } } = this.context;
 
     this.subscribe(lobby.opSendMessage$, (opSendMessage) => this.setState({ opSendMessage }));
 
@@ -37,12 +37,12 @@ class LobbyContainer extends ContainerBase {
   }
 
   render() {
-    const {lobby: {games, messages}, opSendMessage} = this.state;
+    const { lobby: { games, messages }, opSendMessage } = this.state;
 
     return (
       <div className="comp-lobby">
-        <GameList games={games} joinGame={this._joinGame} />
-        <Chat messages={messages} opSendMessage={opSendMessage} sendMessage={this._sendMessage} />
+        <GameList games={games} joinGame={this._joinGame}/>
+        <Chat messages={messages} opSendMessage={opSendMessage} sendMessage={this._sendMessage}/>
       </div>
     );
   }
@@ -69,20 +69,29 @@ class LobbySidebar extends ContainerBase {
   }
 
   componentWillMount() {
-    const {stores: {user, game}} = this.context;
+    const { stores: { user, game, lobby } } = this.context;
 
     this.subscribe(user.opLogin$, (opLogin) => this.setState({ opLogin }));
+
     this.subscribe(game.opCreateGame$, (opCreateGame) => this.setState({ opCreateGame }));
+
+    this.subscribe(lobby.view$, (lobbyView) => this.setState({ lobby: lobbyView }));
   }
 
   render() {
-    const {opLogin, opCreateGame} = this.state;
+
+    const { opLogin, opCreateGame, lobby: { users } } = this.state;
 
     return (
       <section className="comp-lobby-sidebar">
         <div className="m-sidebar-buttons">
           {!opLogin.can ? null : <button className="m-button primary" onClick={this._login}>Login</button>}
-          {!opCreateGame.can ? null : <button className="m-button good" onClick={this._createGame} disabled={opCreateGame.inProgress}>Create Game</button>}
+          {!opCreateGame.can ? null :
+            <button className="m-button good" onClick={this._createGame} disabled={opCreateGame.inProgress}>Create
+              Game</button>}
+        </div>
+        <div>
+          <UserList users={users}/>
         </div>
       </section>
     );
@@ -93,10 +102,10 @@ class LobbySidebar extends ContainerBase {
 
 
 //
-// ─── LIST ───────────────────────────────────────────────────────────────────────
+// ─── STATELESS ───────────────────────────────────────────────────────────────────────
 //
 
-function GameList({games, joinGame}) {
+function GameList({ games, joinGame }) {
   return (
     <section className="comp-game-list">
       {games.length > 0 ? null : <div className="no-games">There are no games yet.</div>}
@@ -115,6 +124,24 @@ function GameList({games, joinGame}) {
         </div>
       )}
     </section>
+  );
+}
+
+function UserList({ users }) {
+  return (
+    <ul className="comp-player-list">
+      {users.map((user) => {
+        return (
+          <li key={user.id}>
+            <div className="details">
+              <div className="name">
+                {user.name}
+              </div>
+            </div>
+          </li>
+        );
+      })}
+    </ul>
   );
 }
 

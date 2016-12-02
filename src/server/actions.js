@@ -8,3 +8,6 @@ export const playerDisposed = (gameId, playerId) => ({ type: PLAYER_DISPOSED, ga
 
 export const GAME_SUMMARY_CHANGED = 'GAME_SUMMARY_CHANGED';
 export const gameSummaryChanged = (gameId, summary) => ({ type: GAME_SUMMARY_CHANGED, gameId, summary });
+
+export const USER_DISPOSED = 'USER_DISPOSED';
+export const userDisposed = (userId) => ({ type: USER_DISPOSED, userId });
