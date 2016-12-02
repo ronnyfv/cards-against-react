@@ -18,6 +18,7 @@ export default class LobbyHandlers extends HandlerBase {
           return;
         }
 
+        console.log(this.client);
         lobby.sendMessage(this.client, action.message);
       })
     );

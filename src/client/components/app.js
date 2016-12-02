@@ -12,8 +12,8 @@ import dialogTypes from "./dialogs";
 
 class AppContainer extends ContainerBase {
   componentWillMount() {
-    const {stores: {app}, services: {dispatcher}} = this.context;
-    const {router} = this.props;
+    const { stores: { app }, services: { dispatcher } } = this.context;
+    const { router } = this.props;
 
     this.subscribe(app.dialogs$, (dialogs) => {
       this.setState({ dialogs });
@@ -37,12 +37,12 @@ class AppContainer extends ContainerBase {
   }
 
   render() {
-    const {main, sidebar} = this.props;
-    const {dialogs} = this.state;
+    const { main, sidebar } = this.props;
+    const { dialogs } = this.state;
 
     const dialogStack = dialogs.map((dialog) => {
       const DialogComponent = dialogTypes[dialog.id];
-      return <DialogComponent {...dialog.props} key={dialog.id} />;
+      return <DialogComponent {...dialog.props} key={dialog.id}/>;
     });
 
     return (
@@ -50,14 +50,23 @@ class AppContainer extends ContainerBase {
         <div className="dialogs">
           {dialogStack}
         </div>
-        <div className="row inner">
-          <div className="col-xs-12 col-sm-4 col-md-3 col-lg-2 sidebar">
-            {sidebar}
-          </div>
-          <div className="col-xs main">
+        <header className="header m-b-10">
+          Header here
+        </header>
+        <div className="content">
+          <article className="main m-l-10 m-r-10">
             {main}
-          </div>
+          </article>
+          <aside className="sidebar">
+            {sidebar}
+          </aside>
+          <article className="ads">
+            Advertisements
+          </article>
         </div>
+        <footer className="footer m-t-10">
+          Footer
+        </footer>
       </div>
     );
   }

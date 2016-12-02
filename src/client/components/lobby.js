@@ -134,7 +134,7 @@ function UserList({ users }) {
         return (
           <li key={user.id}>
             <div className="details">
-              <div className="name">
+              <div className="name" style={{ color: user.color }}>
                 {user.name}
               </div>
             </div>

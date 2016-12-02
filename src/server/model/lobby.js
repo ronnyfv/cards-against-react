@@ -46,7 +46,10 @@ export class Lobby extends RoomBase {
     this._tick(() => {
       this.messages.push({
         index: this.messages.length + 1,
-        name: client.name,
+        user: {
+          name: client.name,
+          color: client.color
+        },
         date: Date.now(),
         message
       });

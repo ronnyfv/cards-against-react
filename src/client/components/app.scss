@@ -2,46 +2,102 @@
 
 .comp-app {
   height: 100%;
-  overflow: hidden;
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-flex-flow: row wrap;
+  flex-flow: row wrap;
+  flex-direction: column;
+  min-height: 650px;
+  min-width: 950px;
 
-  > .inner {
-    display: flex;
-    height: 100%;
-    padding: 10px;
-    box-sizing: border-box;
-    flex-direction: row;
+  //> .inner {
+  //  display: flex;
+  //  height: 100%;
+  //  padding: 10px;
+  //  box-sizing: border-box;
+  //  flex-direction: row;
+  //}
+
+  > .header {
+    border-bottom: 2px solid $color-section-border;
+    height: 40px;
   }
 
-  > .inner > .sidebar {
-    @include section;
-    width: 200px;
-    flex: none;
+  > .footer {
+    text-align: center;
+    border-top: 2px solid $color-section-border;
+    height: 30px;
+  }
+
+  > .content {
     display: flex;
-    flex-direction: column;
+    flex: 1;
 
-    .m-sidebar-buttons {
-      flex: none;
-      margin: 0 10px;
+    > .main {
+      flex: 1;
+      position: relative;
+      display: flex;
+      flex-direction: column;
 
-      .m-button {
-        width: 100%;
-        display: block;
-        margin: 10px 0;
+      > div {
+        flex-grow: 1;
+        display: flex;
+        flex-direction: column;
       }
+    }
+
+    > .sidebar {
+      @include section;
+      order: -1;
+      width: 200px;
+      flex: none;
+      display: flex;
+      flex-direction: column;
+
+      .m-sidebar-buttons {
+        flex: none;
+        margin: 0 10px;
+
+        .m-button {
+          width: 100%;
+          display: block;
+          margin: 10px 0;
+          text-align: center;
+        }
+      }
+    }
+
+    > .ads {
+      @include section;
+      text-align: center;
+      flex: 0 0 12em;
     }
   }
 
-  > .inner > .main {
-    flex-grow: 1;
-    margin-left: 10px;
-    position: relative;
-    display: flex;
-    flex-direction: column;
+  > .aside {
+    @include section;
+    order: 2;
+    flex: 1 auto;
 
-    > div {
-      flex-grow: 1;
+    &.sidebar {
+      width: 200px;
+      flex: none;
       display: flex;
       flex-direction: column;
+
+      .m-sidebar-buttons {
+        flex: none;
+        margin: 0 10px;
+
+        .m-button {
+          width: 100%;
+          display: block;
+          margin: 10px 0;
+        }
+      }
     }
   }
 

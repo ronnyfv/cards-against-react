@@ -3,6 +3,7 @@ import { DispatcherServer } from "../dispatcher";
 import LobbyHandlers from "./handlers/lobby";
 import GameHandlers from "./handlers/game";
 import { validateName } from "../shared/validation/user";
+import { User } from "./user";
 
 export class Client extends DispatcherServer {
   get details() {

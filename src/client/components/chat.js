@@ -17,7 +17,7 @@ export default class Chat extends Component {
     this._lastIndex = -1;
 
     this._sendMessage = (e) => {
-      const {opSendMessage, sendMessage} = this.props;
+      const { opSendMessage, sendMessage } = this.props;
 
       e.preventDefault();
 
@@ -34,7 +34,7 @@ export default class Chat extends Component {
   }
 
   componentDidUpdate() {
-    const {messages} = this.props;
+    const { messages } = this.props;
 
     if (messages.length == 0)
       return;
@@ -48,15 +48,16 @@ export default class Chat extends Component {
   }
 
   render() {
-    const {messages, opSendMessage} = this.props;
+    const { messages, opSendMessage } = this.props;
 
     return (
       <section className="comp-chat">
         <ul className="messages" ref={(c) => this._messages = c}>
           {messages.map((message) =>
             <li key={message.index}>
-              <span className="author">{message.name}</span>
-              <span className="message">{message.message} - {message.date}</span>
+              <span className="author" color={{color: message.user.color}}>{message.user.name}</span>
+              <span className="message">{message.message}</span>
+              <span className="date">{this.msToTime(message.date)}</span>
             </li>
           )}
         </ul>
@@ -66,9 +67,19 @@ export default class Chat extends Component {
             placeholder={opSendMessage.can ? "enter a message" : "please log in to chat"}
             ref={(c) => this._text = c}
             disabled={!opSendMessage.can}
-            />
+          />
         </form>
       </section>
     );
+  }
+
+  msToTime(duration) {
+    let minutes = parseInt((duration / (1000 * 60)) % 60);
+    let hours = parseInt((duration / (1000 * 60 * 60)) % 24);
+
+    hours = (hours < 10) ? `0${hours}` : hours;
+    minutes = (minutes < 10) ? `0${minutes}` : minutes;
+
+    return `${hours}:${minutes}`;
   }
 }
