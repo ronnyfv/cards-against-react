@@ -10,10 +10,11 @@ export class DispatcherServer extends Dispatcher {
   }
 
   invokeHandler(action, { statusFilter, callback }) {
-    console.log(action);
-    console.log(statusFilter);
-    console.log(callback);
-    if (!isDevelopment) {
+    if (isDevelopment) {
+      console.log(action);
+      console.log(statusFilter);
+      console.log(callback);
+
       const separator = '---------------------------------------';
 
       console.log(`\x1b[36m${separator}\x1b[0m`);
